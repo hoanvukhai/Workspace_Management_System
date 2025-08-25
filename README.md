@@ -92,86 +92,10 @@ Các sơ đồ Use-case chi tiết (tổng quan, xác thực, quản lý không 
 - **Khác**: JWT cho xác thực, Nodemailer cho email, Vite cho công cụ xây dựng.
 
 ## Cấu trúc dự án
-task-management/
-├── backend/
-│   ├── config/
-│   │   └── db.js
-│   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── eventController.js
-│   │   ├── goalController.js
-│   │   ├── noteController.js
-│   │   ├── taskAssignmentController.js
-│   │   ├── taskController.js
-│   │   ├── transactionController.js
-│   │   ├── workspaceController.js
-│   │   └── workspaceMemberController.js
-│   ├── middleware/
-│   │   ├── adminMiddleware.js
-│   │   └── authMiddleware.js
-│   ├── models/
-│   │   ├── eventModel.js
-│   │   ├── goalModel.js
-│   │   ├── noteModel.js
-│   │   ├── taskAssignmentModel.js
-│   │   ├── taskModel.js
-│   │   ├── transactionModel.js
-│   │   ├── userModel.js
-│   │   ├── workspaceMemberModel.js
-│   │   └── workspaceModel.js
-│   ├── routes/
-│   │   └── authRoutes.js
-│   ├── utils/
-│   ├── .env
-│   ├── package-lock.json
-│   ├── package.json
-│   └── server.js
-└── frontend/
-├── public/
-├── src/
-│   ├── components/
-│   │   ├── AddMember.js
-│   │   ├── DashboardWidgets.js
-│   │   ├── Footer.js
-│   │   ├── Header.js
-│   │   ├── LoadingSpinner.js
-│   │   ├── ManageEvents.js
-│   │   ├── ManageGoals.js
-│   │   ├── ManageMembers.js
-│   │   ├── ManageNotes.js
-│   │   ├── ManageTaskAssignments.js
-│   │   ├── ManageTasks.js
-│   │   ├── ManageTasksForm.js
-│   │   ├── ManageTransactions.js
-│   │   ├── MemberList.js
-│   │   ├── Modal.js
-│   │   ├── PrivateRoute.js
-│   │   └── WorkspaceList.js
-│   ├── img/
-│   ├── pages/
-│   │   ├── AdminUsersPage.js
-│   │   ├── Home.js
-│   │   ├── HomePage.js
-│   │   ├── LoginPage.js
-│   │   ├── ProfilePage.js
-│   │   ├── RegisterPage.js
-│   │   ├── ResetPasswordPage.js
-│   │   ├── VerifyEmailPage.js
-│   │   └── WorkspaceDetailPage.js
-│   ├── App.css
-│   ├── App.js
-│   ├── App.test.js
-│   ├── index.css
-│   ├── index.js
-│   ├── logo.svg
-│   ├── reportWebVitals.js
-│   └── setupTests.js
-├── .gitignore
-├── package-lock.json
-├── package.json
-├── postcss.config.js
-├── README.md
-└── tailwind.config.js
+<img width="284" height="709" alt="image" src="https://github.com/user-attachments/assets/89a901d4-f2f7-43b7-a257-17e199611a32" />
+<img width="380" height="192" alt="image" src="https://github.com/user-attachments/assets/3c5fbb85-c72b-4725-b603-1728220a4f44" />
+<img width="354" height="846" alt="image" src="https://github.com/user-attachments/assets/ab9c3100-4d57-4a21-bb10-f59d39f2e6dc" />
+
 
 ## Hướng dẫn cài đặt
 
