@@ -92,8 +92,8 @@ Các sơ đồ Use-case chi tiết (tổng quan, xác thực, quản lý không 
 - **Khác**: JWT cho xác thực, Nodemailer cho email, Vite cho công cụ xây dựng.
 
 ## Cấu trúc dự án
-<img width="284" height="709" alt="image" src="https://github.com/user-attachments/assets/89a901d4-f2f7-43b7-a257-17e199611a32" />
-<img width="354" height="846" alt="image" src="https://github.com/user-attachments/assets/ab9c3100-4d57-4a21-bb10-f59d39f2e6dc" />
+<img width="300" height="750" alt="image" src="https://github.com/user-attachments/assets/89a901d4-f2f7-43b7-a257-17e199611a32" />
+<img width="300" height="750" alt="image" src="https://github.com/user-attachments/assets/ab9c3100-4d57-4a21-bb10-f59d39f2e6dc" />
 <img width="380" height="192" alt="image" src="https://github.com/user-attachments/assets/3c5fbb85-c72b-4725-b603-1728220a4f44" />
 
 
