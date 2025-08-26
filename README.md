@@ -142,11 +142,6 @@ Dự án được thực hiện trong 8 tuần với phương pháp lấy cảm 
 
 Thành viên nhóm: Vũ Khải Hoàn (21012316), Định Trọng Việt Phú (21012321). Hướng dẫn bởi TS. Nguyễn Thị Thùy Liên.
 
-## Đạo đức và tác động xã hội
-
-- **Đạo đức**: Mã nguồn gốc gốc; cộng tác tôn trọng; sử dụng nguồn hợp pháp.
-- **Tác động xã hội**: Tăng hiệu suất cho cá nhân và nhóm nhỏ; giảm phân mảnh thông tin; hỗ trợ giáo dục và làm việc tự do.
-
 ## Học tập và cải tiến tương lai
 
 - **Kiến thức đã học**: React, Node.js, MySQL, thực hành Agile.
