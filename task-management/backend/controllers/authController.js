@@ -17,6 +17,7 @@ const transporter = nodemailer.createTransport({
 
 const register = async (req, res) => {
   const { name, email, password } = req.body; // Frontend đã validate confirmPassword
+  console.log('Register attempt:', { email, name });
   try {
     // Kiểm tra required fields
     if (!name || !email || !password) {
@@ -30,6 +31,7 @@ const register = async (req, res) => {
 
     const existingUser = await userModel.findUserByEmail(email);
     if (existingUser) {
+      console.log('Register failed: email exists', { email });
       return res.status(400).json({ message: "Email đã tồn tại" });
     }
 
@@ -52,7 +54,7 @@ const register = async (req, res) => {
       subject: "Xác minh email của bạn",
       html: `<p>Vui lòng nhấp vào liên kết sau để xác minh email của bạn: <a href="${verificationLink}">${verificationLink}</a></p><p>Liên kết sẽ hết hạn sau 24 giờ.</p>`,
     }).catch(err => {
-      console.error('Failed to send verification email:', err);
+      console.error('Failed to send verification email:', err?.message || err);
     });
 
   } catch (error) {
@@ -62,14 +64,22 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log('Login attempt:', { email });
   try {
     const user = await userModel.findUserByEmail(email);
-    if (!user) return res.status(400).json({ message: "Email không tồn tại" });
+    if (!user) {
+      console.log('Login failed: user not found', { email });
+      return res.status(400).json({ message: "Email không tồn tại" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Sai mật khẩu" });
+    if (!isMatch) {
+      console.log('Login failed: wrong password', { email });
+      return res.status(400).json({ message: "Sai mật khẩu" });
+    }
 
     if (!user.is_verified) {
+      console.log('Login blocked: email not verified', { email });
       return res.status(403).json({ message: "Vui lòng xác minh email trước khi đăng nhập." });
     }
 
