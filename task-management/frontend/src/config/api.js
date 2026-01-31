@@ -1,15 +1,21 @@
-// API URL từ environment variables
-// Build timestamp: để force rebuild mỗi lần deploy
-const BUILD_TIME = new Date().toISOString();
+// API URL - Hardcoded cho Production
+// Local: http://localhost:5000
+// Production: https://duotask-api.onrender.com
 
-const API_URL = process.env.REACT_APP_API_URL || 'https://duotask-api.onrender.com';
+let API_URL;
 
-console.log('🚀 API Config loaded at:', BUILD_TIME);
+if (process.env.NODE_ENV === 'development') {
+  // Development - use localhost
+  API_URL = 'http://localhost:5000';
+  console.log('🔧 Development mode - Using localhost:5000');
+} else {
+  // Production - use Render backend
+  API_URL = 'https://duotask-api.onrender.com';
+  console.log('🚀 Production mode - Using Render backend:', API_URL);
+}
+
+// Debug log
 console.log('📡 API_URL:', API_URL);
 console.log('🔧 NODE_ENV:', process.env.NODE_ENV);
-
-if (!process.env.REACT_APP_API_URL && process.env.NODE_ENV === 'production') {
-  console.warn('⚠️ REACT_APP_API_URL is not set! Using fallback:', API_URL);
-}
 
 export default API_URL;
