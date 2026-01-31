@@ -27,8 +27,22 @@ function RegisterPage() {
     setMessage("");
     setLoading(true); // Bắt đầu loading
 
+    // Debug: kiểm tra giá trị input
+    console.log("Form data:", {
+      name: form.name,
+      email: form.email,
+      password: form.password,
+      confirmPassword: form.confirmPassword,
+      passwordLength: form.password.length,
+      confirmPasswordLength: form.confirmPassword.length,
+      areEqual: form.password === form.confirmPassword,
+    });
+
     // Kiểm tra password và confirmPassword khớp
     if (form.password !== form.confirmPassword) {
+      console.error("❌ Password không khớp:");
+      console.error("Password:", JSON.stringify(form.password));
+      console.error("ConfirmPassword:", JSON.stringify(form.confirmPassword));
       setError("Mật khẩu và mật khẩu nhập lại không khớp");
       setLoading(false);
       return;
