@@ -1,13 +1,19 @@
-const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10
-});
-
-module.exports = pool;
+// Dùng PostgreSQL cho production, MySQL cho development
+if (process.env.DATABASE_URL) {
+  module.exports = require('./db-postgres');
+} else {
+  const mysql = require('mysql2/promise');
+  
+  const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    waitForConnections: true,
+    connectionLimit: 10
+  });
+  
+  module.exports = pool;
+}
