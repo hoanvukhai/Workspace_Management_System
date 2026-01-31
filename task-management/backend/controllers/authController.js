@@ -71,9 +71,8 @@ const login = async (req, res) => {
       return res.status(403).json({ message: "Tài khoản của bạn đã bị vô hiệu hóa. Vui lòng liên hệ admin." });
     }
 
-    // Thêm role vào token
-    const [userRole] = await db.execute("SELECT role FROM users WHERE id = ?", [user.id]);
-    const role = userRole[0]?.role || "user";
+    // Thêm role vào token - lấy từ user object (đã có từ findUserByEmail)
+    const role = user.role || "user";
 
     const token = jwt.sign(
       { id: user.id, name: user.name, email: user.email, role },
