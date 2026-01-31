@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import LoadingSpinner from "../components/LoadingSpinner";
+import API_URL from "../config/api";
 
 function ResetPasswordPage() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function ResetPasswordPage() {
     } else {
       setLoading(true);
       axios
-        .get(`http://localhost:5000/api/auth/reset-password?token=${token}`)
+        .get(`${API_URL}/api/auth/reset-password?token=${token}`)
         .then((res) => {
           setLoading(false);
           if (res.status === 200) {
@@ -44,7 +45,7 @@ function ResetPasswordPage() {
     setLoading(true);
     try {
       const token = searchParams.get("token");
-      await axios.post("http://localhost:5000/api/auth/reset-password", {
+      await axios.post(`${API_URL}/api/auth/reset-password`, {
         token,
         newPassword,
       });

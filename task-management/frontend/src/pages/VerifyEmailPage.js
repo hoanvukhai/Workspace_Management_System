@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import LoadingSpinner from "../components/LoadingSpinner";
+import API_URL from "../config/api";
 
 function VerifyEmailPage() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ function VerifyEmailPage() {
     } else {
       setLoading(true);
       axios
-        .get(`http://localhost:5000/api/auth/verify-email?token=${token}`)
+        .get(`${API_URL}/api/auth/verify-email?token=${token}`)
         .then((res) => {
           setLoading(false);
           if (res.status === 200) {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../config/api";
 
 const ManageNotes = ({ workspaceId, currentUserRole }) => {
   const [notes, setNotes] = useState([]);
@@ -8,7 +9,7 @@ const ManageNotes = ({ workspaceId, currentUserRole }) => {
 
   const fetchNotes = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/notes/${workspaceId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/notes/${workspaceId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setNotes(res.data);
@@ -21,7 +22,7 @@ const ManageNotes = ({ workspaceId, currentUserRole }) => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:5000/api/auth/notes",
+        `${API_URL}/api/auth/notes`,
         { workspace_id: workspaceId, content: newNote },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -35,7 +36,7 @@ const ManageNotes = ({ workspaceId, currentUserRole }) => {
   const handleUpdateNote = async (noteId, content) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/auth/notes/${noteId}`,
+        `${API_URL}/api/auth/notes/${noteId}`,
         { content },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -48,7 +49,7 @@ const ManageNotes = ({ workspaceId, currentUserRole }) => {
   const handleDeleteNote = async (noteId) => {
     if (!window.confirm("Bạn có chắc muốn xóa ghi chú này?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/auth/notes/${noteId}`, {
+      await axios.delete(`${API_URL}/api/auth/notes/${noteId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchNotes();

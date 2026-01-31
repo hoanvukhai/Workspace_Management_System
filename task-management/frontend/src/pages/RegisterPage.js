@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoadingSpinner from "../components/LoadingSpinner";
+import API_URL from "../config/api";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ function RegisterPage() {
     setLoading(true); // Bắt đầu loading
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", form);
+      const res = await axios.post(`${API_URL}/api/auth/register`, form);
       if (res.data) {
         setMessage("Đăng ký thành công. Vui lòng kiểm tra email để xác minh.");
         setTimeout(() => navigate("/login"), 3000);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../config/api";
 
 function toMySQLDatetime(dt) {
   if (!dt) return null;
@@ -28,7 +29,7 @@ const ManageEvents = ({ workspaceId, currentUserRole }) => {
 
   const fetchEvents = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/events/${workspaceId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/events/${workspaceId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setEvents(res.data);
@@ -41,7 +42,7 @@ const ManageEvents = ({ workspaceId, currentUserRole }) => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:5000/api/auth/events",
+        `${API_URL}/api/auth/events`,
         {
           workspace_id: workspaceId,
           ...newEvent,
@@ -71,7 +72,7 @@ const ManageEvents = ({ workspaceId, currentUserRole }) => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/auth/events/${eventId}`,
+        `${API_URL}/api/auth/events/${eventId}`,
         updatedEvent,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -84,7 +85,7 @@ const ManageEvents = ({ workspaceId, currentUserRole }) => {
   const handleDeleteEvent = async (eventId) => {
     if (!window.confirm("Bạn có chắc muốn xóa sự kiện này?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/auth/events/${eventId}`, {
+      await axios.delete(`${API_URL}/api/auth/events/${eventId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchEvents();

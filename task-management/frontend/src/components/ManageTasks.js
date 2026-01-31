@@ -3,6 +3,7 @@ import axios from "axios";
 import ManageTasksForm from "./ManageTasksForm";
 import ManageTaskAssignments from "./ManageTaskAssignments";
 import Modal from "./Modal";
+import API_URL from "../config/api";
 
 const ManageTasks = ({ workspaceId, currentUserRole }) => {
   const [tasks, setTasks] = useState([]);
@@ -18,7 +19,7 @@ const ManageTasks = ({ workspaceId, currentUserRole }) => {
 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/tasks/${workspaceId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/tasks/${workspaceId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(res.data);
@@ -30,7 +31,7 @@ const ManageTasks = ({ workspaceId, currentUserRole }) => {
   const handleDeleteTask = async (taskId) => {
     if (!window.confirm("Bạn có chắc muốn xóa công việc này?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/auth/tasks/${taskId}`, {
+      await axios.delete(`${API_URL}/api/auth/tasks/${taskId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchTasks();

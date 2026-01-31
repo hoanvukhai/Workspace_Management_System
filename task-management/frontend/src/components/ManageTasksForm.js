@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../config/api";
 
 const ManageTasksForm = ({ workspaceId, task, onSave }) => {
   const token = localStorage.getItem("token");
@@ -15,11 +16,11 @@ const ManageTasksForm = ({ workspaceId, task, onSave }) => {
     try {
       const data = { ...formData, workspaceId };
       if (task) {
-        await axios.put(`http://localhost:5000/api/auth/tasks/${task.id}`, data, {
+        await axios.put(`${API_URL}/api/auth/tasks/${task.id}`, data, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post(`http://localhost:5000/api/auth/tasks/add`, data, {
+        await axios.post(`${API_URL}/api/auth/tasks/add`, data, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }

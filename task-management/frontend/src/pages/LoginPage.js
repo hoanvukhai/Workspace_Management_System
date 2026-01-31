@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import LoadingSpinner from "../components/LoadingSpinner";
+import API_URL from "../config/api";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", form);
+      const res = await axios.post(`${API_URL}/api/auth/login`, form);
       if (res.data && res.data.token) {
         localStorage.setItem("token", res.data.token);
         alert("Đăng nhập thành công!");
@@ -40,7 +41,7 @@ function LoginPage() {
     e.preventDefault();
     try {
       setLoading(true);
-      await axios.post("http://localhost:5000/api/auth/forgot-password", { email: forgotEmail });
+      await axios.post(`${API_URL}/api/auth/forgot-password`, { email: forgotEmail });
       alert("Email đặt lại mật khẩu đã được gửi. Vui lòng kiểm tra hộp thư.");
       setShowForgot(false);
     } catch (err) {

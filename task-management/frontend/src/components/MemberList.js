@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../config/api";
 
 function MemberList({ workspaceId, currentUserRole }) {
   const [members, setMembers] = useState([]);
@@ -9,7 +10,7 @@ function MemberList({ workspaceId, currentUserRole }) {
   const fetchMembers = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/auth/workspace-members/${workspaceId}`,
+        `${API_URL}/api/auth/workspace-members/${workspaceId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -25,7 +26,7 @@ function MemberList({ workspaceId, currentUserRole }) {
 
     try {
       await axios.delete(
-        "http://localhost:5000/api/auth/workspace-members/remove",
+        `${API_URL}/api/auth/workspace-members/remove`,
         {
           headers: { Authorization: `Bearer ${token}` },
           data: { user_id: memberId, workspace_id: workspaceId },
@@ -40,7 +41,7 @@ function MemberList({ workspaceId, currentUserRole }) {
 const handleRoleChange = async (memberId, newRole) => {
   try {
     await axios.put(
-      "http://localhost:5000/api/auth/workspace-members/role",
+      `${API_URL}/api/auth/workspace-members/role`,
       { user_id: memberId, workspace_id: workspaceId, role: newRole },
       { headers: { Authorization: `Bearer ${token}` } }
     );

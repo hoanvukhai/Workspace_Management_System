@@ -8,6 +8,7 @@ import ManageEvents from "../components/ManageEvents";
 import ManageTransactions from "../components/ManageTransactions";
 import ManageGoals from "../components/ManageGoals";
 import DashboardWidgets from "../components/DashboardWidgets";
+import API_URL from "../config/api";
 
 // Import ảnh từ thư mục img (giả sử nằm trong src/img/)
 import lakeImg from "../img/Lake.jpg";
@@ -55,7 +56,7 @@ const WorkspaceDetailPage = () => {
 
 const fetchWorkspace = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/workspaces/${workspaceId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/workspaces/${workspaceId}`, {
         headers: { Authorization: token ? `Bearer ${token}` : undefined },
       });
       setWorkspace(res.data);
@@ -79,7 +80,7 @@ const fetchWorkspace = async () => {
 const fetchCurrentUserRole = async () => {
     if (!token) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/workspace-members/${workspaceId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/workspace-members/${workspaceId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const currentUserId = JSON.parse(atob(token.split(".")[1])).id;
@@ -92,7 +93,7 @@ const fetchCurrentUserRole = async () => {
 
 const fetchMembers = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/workspace-members/${workspaceId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/workspace-members/${workspaceId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMemberCount(res.data.length);
@@ -105,7 +106,7 @@ const fetchMembers = async () => {
 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/tasks/${workspaceId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/tasks/${workspaceId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return res.data;
@@ -116,7 +117,7 @@ const fetchMembers = async () => {
 
   const fetchNotes = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/notes/${workspaceId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/notes/${workspaceId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return res.data;
@@ -127,7 +128,7 @@ const fetchMembers = async () => {
 
   const fetchEvents = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/events/${workspaceId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/events/${workspaceId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return res.data;
@@ -138,7 +139,7 @@ const fetchMembers = async () => {
 
   const fetchTransactions = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/transactions/${workspaceId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/transactions/${workspaceId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return res.data;
@@ -149,7 +150,7 @@ const fetchMembers = async () => {
 
   const fetchGoals = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/goals/${workspaceId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/goals/${workspaceId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return res.data;
@@ -289,7 +290,7 @@ const fetchMembers = async () => {
     setIsSaving(true);
     try {
       await axios.put(
-        `http://localhost:5000/api/auth/workspaces/${workspaceId}`,
+        `${API_URL}/api/auth/workspaces/${workspaceId}`,
         {
           name: editName,
           description: editDescription,

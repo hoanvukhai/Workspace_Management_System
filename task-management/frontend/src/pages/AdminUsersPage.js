@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API_URL from "../config/api";
 
 const AdminUsersPage = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const AdminUsersPage = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/admin/users", {
+      const res = await axios.get(`${API_URL}/api/auth/admin/users`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(res.data);
@@ -54,7 +55,7 @@ const AdminUsersPage = () => {
   const handleEditUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/auth/admin/users/${selectedUser.id}`, editUser, {
+      await axios.put(`${API_URL}/api/auth/admin/users/${selectedUser.id}`, editUser, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setShowEditModal(false);
@@ -67,7 +68,7 @@ const AdminUsersPage = () => {
   const handleChangePassword = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/auth/admin/users/${selectedUser.id}/password`, { newPassword: password }, {
+      await axios.put(`${API_URL}/api/auth/admin/users/${selectedUser.id}/password`, { newPassword: password }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setShowPasswordModal(false);
@@ -80,7 +81,7 @@ const AdminUsersPage = () => {
   const handleDeleteUser = async (userId) => {
     if (window.confirm("Bạn có chắc muốn xóa người dùng này?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/auth/admin/users/${userId}`, {
+        await axios.delete(`${API_URL}/api/auth/admin/users/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         fetchUsers();

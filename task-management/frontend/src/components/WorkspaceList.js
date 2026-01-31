@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { FaLock, FaLockOpen, FaEdit, FaTrash, FaPlus } from "react-icons/fa";
+import API_URL from "../config/api";
 
 const WorkspaceList = () => {
   const [workspaces, setWorkspaces] = useState([]);
@@ -16,7 +17,7 @@ const WorkspaceList = () => {
 
   const fetchWorkspaces = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/workspaces", {
+      const res = await axios.get(`${API_URL}/api/auth/workspaces`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setWorkspaces(res.data);
@@ -28,7 +29,7 @@ const WorkspaceList = () => {
   const handleCreateWorkspace = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/auth/workspaces", newWorkspace, {
+      await axios.post(`${API_URL}/api/auth/workspaces`, newWorkspace, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setNewWorkspace({ name: "", description: "", is_private: false });
@@ -44,7 +45,7 @@ const WorkspaceList = () => {
 
     if (window.confirm("Bạn có chắc muốn xóa không gian này?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/auth/workspaces/${workspaceId}`, {
+        await axios.delete(`${API_URL}/api/auth/workspaces/${workspaceId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         fetchWorkspaces();
@@ -59,7 +60,7 @@ const WorkspaceList = () => {
     if (!editWorkspace) return;
 
     try {
-      await axios.put(`http://localhost:5000/api/auth/workspaces/${editWorkspace.id}`, {
+      await axios.put(`${API_URL}/api/auth/workspaces/${editWorkspace.id}`, {
         name: editWorkspace.name,
         description: editWorkspace.description,
         is_private: editWorkspace.is_private,

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Modal from "../components/Modal";
 import { FaUser  } from "react-icons/fa"; // Thêm icon từ react-icons
+import API_URL from "../config/api";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const ProfilePage = () => {
     }
 
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/me", {
+      const res = await axios.get(`${API_URL}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUser(res.data);
@@ -49,7 +50,7 @@ const ProfilePage = () => {
   const handleSaveProfile = async () => {
     try {
       await axios.put(
-        "http://localhost:5000/api/auth/me",
+        `${API_URL}/api/auth/me`,
         { name: editName, avatar: editAvatar },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -71,7 +72,7 @@ const ProfilePage = () => {
     }
     try {
       await axios.put(
-        "http://localhost:5000/api/auth/change-password",
+        `${API_URL}/api/auth/change-password`,
         { currentPassword, newPassword },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../config/api";
 
 function toMySQLDate(dt) {
   if (!dt) return null;
@@ -29,7 +30,7 @@ const ManageTransactions = ({ workspaceId, currentUserRole }) => {
 
   const fetchTransactions = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/transactions/${workspaceId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/transactions/${workspaceId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTransactions(res.data);
@@ -42,7 +43,7 @@ const ManageTransactions = ({ workspaceId, currentUserRole }) => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:5000/api/auth/transactions",
+        `${API_URL}/api/auth/transactions`,
         {
           workspace_id: workspaceId,
           ...newTransaction,
@@ -73,7 +74,7 @@ const ManageTransactions = ({ workspaceId, currentUserRole }) => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/auth/transactions/${transactionId}`,
+        `${API_URL}/api/auth/transactions/${transactionId}`,
         updatedTransaction,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -86,7 +87,7 @@ const ManageTransactions = ({ workspaceId, currentUserRole }) => {
   const handleDeleteTransaction = async (transactionId) => {
     if (!window.confirm("Bạn có chắc muốn xóa giao dịch này?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/auth/transactions/${transactionId}`, {
+      await axios.delete(`${API_URL}/api/auth/transactions/${transactionId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchTransactions();

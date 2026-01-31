@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import API_URL from "../config/api";
 
 function AddMember({ workspaceId, onMemberAdded, currentUserRole }) {
   const [email, setEmail] = useState("");
@@ -9,7 +10,7 @@ function AddMember({ workspaceId, onMemberAdded, currentUserRole }) {
   const handleAdd = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/workspace-members/add",
+        `${API_URL}/api/auth/workspace-members/add`,
         {
           workspace_id: workspaceId,  // phải trùng với req.body.workspace_id trong controller
           email,

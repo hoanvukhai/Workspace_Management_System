@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../config/api";
 
 const ManageTaskAssignments = ({ taskId, workspaceId, onSave }) => {
   const token = localStorage.getItem("token");
@@ -14,7 +15,7 @@ const ManageTaskAssignments = ({ taskId, workspaceId, onSave }) => {
 
   const fetchAssignments = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/task-assignments/${taskId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/task-assignments/${taskId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAssignments(res.data);
@@ -25,7 +26,7 @@ const ManageTaskAssignments = ({ taskId, workspaceId, onSave }) => {
 
   const fetchAvailableMembers = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/workspace-members/${workspaceId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/workspace-members/${workspaceId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAvailableMembers(res.data.filter(m => !assignments.some(a => a.user_id === m.id)));
@@ -37,7 +38,7 @@ const ManageTaskAssignments = ({ taskId, workspaceId, onSave }) => {
   const handleAssign = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/task-assignments/add",
+        `${API_URL}/api/auth/task-assignments/add`,
         { task_id: taskId, user_id: selectedUserId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -53,7 +54,7 @@ const ManageTaskAssignments = ({ taskId, workspaceId, onSave }) => {
   const handleRemove = async (assignmentId) => {
     if (!window.confirm("Bạn có chắc muốn xóa gán này?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/auth/task-assignments/${assignmentId}`, {
+      await axios.delete(`${API_URL}/api/auth/task-assignments/${assignmentId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchAssignments();

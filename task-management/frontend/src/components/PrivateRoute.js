@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import axios from "axios";
+import API_URL from "../config/api";
 
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -11,7 +12,7 @@ function PrivateRoute({ children }) {
   if (!token && workspaceId) {
     // Kiểm tra xem workspace có phải public không
     axios
-      .get(`http://localhost:5000/api/auth/workspaces/${workspaceId}`, {
+      .get(`${API_URL}/api/auth/workspaces/${workspaceId}`, {
         validateStatus: () => true, // Không throw lỗi cho status 403
       })
       .then((res) => {

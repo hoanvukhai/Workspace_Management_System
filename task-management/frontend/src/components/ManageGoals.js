@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../config/api";
 
 function toMySQLDate(dt) {
   if (!dt) return null;
@@ -23,7 +24,7 @@ const ManageGoals = ({ workspaceId, currentUserRole }) => {
 
   const fetchGoals = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/goals/${workspaceId}`, {
+      const res = await axios.get(`${API_URL}/api/auth/goals/${workspaceId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setGoals(res.data);
@@ -36,7 +37,7 @@ const ManageGoals = ({ workspaceId, currentUserRole }) => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:5000/api/auth/goals",
+        `${API_URL}/api/auth/goals`,
         {
           workspace_id: workspaceId,
           ...newGoal,
@@ -66,7 +67,7 @@ const ManageGoals = ({ workspaceId, currentUserRole }) => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/auth/goals/${goalId}`,
+        `${API_URL}/api/auth/goals/${goalId}`,
         updatedGoal,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -79,7 +80,7 @@ const ManageGoals = ({ workspaceId, currentUserRole }) => {
   const handleDeleteGoal = async (goalId) => {
     if (!window.confirm("Bạn có chắc muốn xóa mục tiêu này?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/auth/goals/${goalId}`, {
+      await axios.delete(`${API_URL}/api/auth/goals/${goalId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchGoals();
