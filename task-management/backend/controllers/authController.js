@@ -43,15 +43,17 @@ const register = async (req, res) => {
     await userModel.createUser(id, name, email, hashedPassword);
     await userModel.updateVerification(email, verificationToken, verificationExpires);
 
-    // Thử gửi email trước
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: email,
-        subject: "Xác minh email của bạn",
-        html: `<p>Vui lòng nhấp vào liên kết sau để xác minh email của bạn: <a href="${verificationLink}">${verificationLink}</a></p><p>Liên kết sẽ hết hạn sau 24 giờ.</p>`,
-      });
+    // Trả về thành công ngay cả khi gửi email gặp lỗi; gửi email bất đồng bộ để không block request
+    res.status(201).json({ message: "Đăng ký thành công. Vui lòng kiểm tra email để xác minh." });
 
-      res.status(201).json({ message: "Đăng ký thành công. Vui lòng kiểm tra email để xác minh." });
+    transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Xác minh email của bạn",
+      html: `<p>Vui lòng nhấp vào liên kết sau để xác minh email của bạn: <a href="${verificationLink}">${verificationLink}</a></p><p>Liên kết sẽ hết hạn sau 24 giờ.</p>`,
+    }).catch(err => {
+      console.error('Failed to send verification email:', err);
+    });
 
   } catch (error) {
     res.status(500).json({ message: "Lỗi server", error: error.message });
