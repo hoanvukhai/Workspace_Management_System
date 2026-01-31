@@ -44,6 +44,12 @@ const register = async (req, res) => {
     const id = uuidv4();
     await userModel.createUser(id, name, email, hashedPassword);
     await userModel.updateVerification(email, verificationToken, verificationExpires);
+    // Nếu bật biến môi trường để bỏ qua xác minh email, đánh dấu user là đã verified
+    if (process.env.SKIP_EMAIL_VERIFICATION === 'true') {
+      await db.execute("UPDATE users SET is_verified = TRUE, verification_token = NULL, verification_expires = NULL WHERE email = ?", [email]);
+      res.status(201).json({ message: "Đăng ký thành công. Tài khoản đã được xác minh (dev mode)." });
+      return;
+    }
 
     // Trả về thành công ngay cả khi gửi email gặp lỗi; gửi email bất đồng bộ để không block request
     res.status(201).json({ message: "Đăng ký thành công. Vui lòng kiểm tra email để xác minh." });
