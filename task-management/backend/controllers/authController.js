@@ -31,7 +31,7 @@ const register = async (req, res) => {
     // Tạo token xác minh trước
     const verificationToken = uuidv4();
     const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 giờ
-    const verificationLink = `http://localhost:3000/verify-email?token=${verificationToken}`;
+    const verificationLink = `${process.env.FRONTEND_URL || "http://localhost:3000"}/verify-email?token=${verificationToken}`;
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const id = uuidv4();
@@ -111,7 +111,7 @@ const forgotPassword = async (req, res) => {
     const resetExpires = new Date(Date.now() + 1 * 60 * 60 * 1000); // Hết hạn sau 1 giờ
     await userModel.updateResetPassword(email, resetToken, resetExpires);
 
-    const resetLink = `http://localhost:3000/reset-password?token=${resetToken}`;
+    const resetLink = `${process.env.FRONTEND_URL || "http://localhost:3000"}/reset-password?token=${resetToken}`;
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
@@ -244,7 +244,7 @@ const createUser = async (req, res) => {
       [id, name, email, hashedPassword, avatar_url, is_active, 0, verificationToken, verificationExpires, "user"]
     );
 
-    const verificationLink = `http://localhost:3000/verify-email?token=${verificationToken}`;
+    const verificationLink = `${process.env.FRONTEND_URL || "http://localhost:3000"}/verify-email?token=${verificationToken}`;
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
