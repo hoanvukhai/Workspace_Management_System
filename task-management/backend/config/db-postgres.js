@@ -10,9 +10,16 @@ const pool = new Pool({
 
 // Wrapper để tương thích với MySQL code
 const db = {
+  // Chuyển các placeholder MySQL `?` sang PostgreSQL $1, $2, ... để giữ tương thích
+  _convertPlaceholders(sql) {
+    let idx = 1;
+    return sql.replace(/\?/g, () => `$${idx++}`);
+  },
+
   async execute(sql, params) {
     try {
-      const result = await pool.query(sql, params);
+      const convertedSql = sql.includes('?') ? this._convertPlaceholders(sql) : sql;
+      const result = await pool.query(convertedSql, params);
       return [result.rows];
     } catch (error) {
       console.error('Database query error:', error);
@@ -22,7 +29,8 @@ const db = {
   
   async query(sql, params) {
     try {
-      const result = await pool.query(sql, params);
+      const convertedSql = sql.includes('?') ? this._convertPlaceholders(sql) : sql;
+      const result = await pool.query(convertedSql, params);
       return [result.rows];
     } catch (error) {
       console.error('Database query error:', error);
@@ -34,7 +42,11 @@ const db = {
     const client = await pool.connect();
     return {
       async execute(sql, params) {
-        const result = await client.query(sql, params);
+        const convertedSql = sql.includes('?') ? (function() {
+          let idx = 1;
+          return sql.replace(/\?/g, () => `$${idx++}`);
+        })() : sql;
+        const result = await client.query(convertedSql, params);
         return [result.rows];
       },
       async beginTransaction() {

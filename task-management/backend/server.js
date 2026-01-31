@@ -6,24 +6,17 @@ require("dotenv").config();
 
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:3000",
-];
-
-// CORS configuration
+// CORS configuration: cho phép localhost, FRONTEND_URL (nếu có) và tất cả các deployment trên *.vercel.app
 app.use(cors({
   origin: function (origin, callback) {
-    // Cho phép:
-    // 1. Requests không có origin (ví dụ: mobile apps, curl)
-    // 2. localhost:3000
-    // 3. Bất kỳ Vercel deployment nào (*.vercel.app)
-    if (!origin || 
-        origin === "http://localhost:3000" ||
-        origin.includes(".vercel.app")) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
+    if (!origin) return callback(null, true);
+    const frontend = process.env.FRONTEND_URL || "http://localhost:3000";
+    // Nếu origin khớp FRONTEND_URL hoặc là một deployment vercel, cho phép
+    if (origin.startsWith(frontend) || /\.vercel\.app$/.test(origin) || origin.startsWith("http://localhost")) {
+      return callback(null, true);
     }
+    // Không ném lỗi ở đây để tránh trả về response không có header CORS
+    return callback(null, false);
   },
   credentials: true
 }));
