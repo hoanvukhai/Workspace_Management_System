@@ -12,7 +12,7 @@ const Home = () => {
       ></div>
       <div className="max-w-6xl mx-auto text-center relative z-10">
         <h1 className="text-5xl md:text-7xl font-extrabold text-blue-700 mb-6 animate-fade-in drop-shadow-md">
-          DuoTask - Nâng tầm năng suất của bạn
+          DuoTask - Nâng tầm năng suất của bạn - Vu Khai Hoan
         </h1>
         <p className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed max-w-3xl mx-auto">
           DuoTask là nền tảng toàn diện, tích hợp quản lý nhiệm vụ, ghi chú, lịch trình, giao dịch, và mục tiêu. Dù là học tập cá nhân hay làm việc nhóm, chúng tôi giúp bạn tổ chức mọi thứ một cách dễ dàng và hiệu quả – hoàn toàn miễn phí!
