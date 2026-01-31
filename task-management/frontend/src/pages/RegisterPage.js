@@ -27,8 +27,27 @@ function RegisterPage() {
     setMessage("");
     setLoading(true); // Bắt đầu loading
 
+    // Kiểm tra password và confirmPassword khớp
+    if (form.password !== form.confirmPassword) {
+      setError("Mật khẩu và mật khẩu nhập lại không khớp");
+      setLoading(false);
+      return;
+    }
+
+    // Kiểm tra password không trống
+    if (!form.password || form.password.length < 6) {
+      setError("Mật khẩu phải có ít nhất 6 ký tự");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const res = await axios.post(`${API_URL}/api/auth/register`, form);
+      // Chỉ gửi name, email, password (không gửi confirmPassword)
+      const res = await axios.post(`${API_URL}/api/auth/register`, {
+        name: form.name,
+        email: form.email,
+        password: form.password
+      });
       if (res.data) {
         setMessage("Đăng ký thành công. Vui lòng kiểm tra email để xác minh.");
         setTimeout(() => navigate("/login"), 3000);
