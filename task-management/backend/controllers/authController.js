@@ -16,11 +16,16 @@ const transporter = nodemailer.createTransport({
 });
 
 const register = async (req, res) => {
-  const { name, email, password, confirmPassword } = req.body; // Thêm confirmPassword
+  const { name, email, password } = req.body; // Frontend đã validate confirmPassword
   try {
-    // Kiểm tra mật khẩu và confirmPassword khớp
-    if (password !== confirmPassword) {
-      return res.status(400).json({ message: "Mật khẩu và mật khẩu nhập lại không khớp." });
+    // Kiểm tra required fields
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "Tên, email và mật khẩu là bắt buộc" });
+    }
+
+    // Kiểm tra password độ dài
+    if (password.length < 6) {
+      return res.status(400).json({ message: "Mật khẩu phải có ít nhất 6 ký tự" });
     }
 
     const existingUser = await userModel.findUserByEmail(email);
