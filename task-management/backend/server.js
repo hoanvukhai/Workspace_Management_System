@@ -28,6 +28,14 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+// Khởi tạo admin tự động (nếu env vars được cung cấp)
+const initAdmin = require('./utils/initAdmin');
+
+app.listen(PORT, async () => {
   console.log(`Server running on port ${PORT}`);
+  try {
+    await initAdmin();
+  } catch (err) {
+    console.error('Error during initAdmin:', err?.message || err);
+  }
 });
