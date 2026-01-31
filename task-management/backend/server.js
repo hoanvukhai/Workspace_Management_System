@@ -8,15 +8,18 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "workspace-management-system-ebon.vercel.app",
-  "https://workspace-management-system-ebon.vercel.app",
-  "workspace-management-system-4kb4d2tuo-hoanvukhais-projects.vercel.app",
-  "https://workspace-management-system-4kb4d2tuo-hoanvukhais-projects.vercel.app"
 ];
 
+// CORS configuration
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    // Cho phép:
+    // 1. Requests không có origin (ví dụ: mobile apps, curl)
+    // 2. localhost:3000
+    // 3. Bất kỳ Vercel deployment nào (*.vercel.app)
+    if (!origin || 
+        origin === "http://localhost:3000" ||
+        origin.includes(".vercel.app")) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
