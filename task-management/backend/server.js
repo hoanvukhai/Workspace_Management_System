@@ -8,6 +8,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:3000",
+  "workspace-management-system-ebon.vercel.app"
 ];
 
 app.use(cors({
