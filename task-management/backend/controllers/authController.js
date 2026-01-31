@@ -85,8 +85,12 @@ const login = async (req, res) => {
     }
 
     if (!user.is_verified) {
-      console.log('Login blocked: email not verified', { email });
-      return res.status(403).json({ message: "Vui lòng xác minh email trước khi đăng nhập." });
+      if (process.env.SKIP_EMAIL_VERIFICATION === 'true') {
+        console.log('Login: skipping email verification due to SKIP_EMAIL_VERIFICATION', { email });
+      } else {
+        console.log('Login blocked: email not verified', { email });
+        return res.status(403).json({ message: "Vui lòng xác minh email trước khi đăng nhập." });
+      }
     }
 
     // Kiểm tra trạng thái hoạt động
