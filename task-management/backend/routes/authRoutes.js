@@ -14,6 +14,7 @@ const isAdmin = require("../middleware/adminMiddleware");
 
 router.post("/register", authController.register);
 router.post("/login", authController.login);
+router.post("/resend-verification", authController.resendVerification);
 router.get("/verify-email", authController.verifyEmail); // Endpoint xác minh email
 router.post("/forgot-password", authController.forgotPassword); // Endpoint quên mật khẩu
 router.get("/reset-password", authController.getResetPassword); // Thêm route GET

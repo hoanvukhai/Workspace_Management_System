@@ -20,6 +20,11 @@ const db = {
     try {
       const convertedSql = sql.includes('?') ? this._convertPlaceholders(sql) : sql;
       const result = await pool.query(convertedSql, params);
+      // Gắn thêm thuộc tính để tương thích với code cũ dùng `affectedRows`
+      if (Array.isArray(result.rows)) {
+        result.rows.affectedRows = result.rowCount;
+        result.rows.rowCount = result.rowCount;
+      }
       return [result.rows];
     } catch (error) {
       console.error('Database query error:', error);
@@ -31,6 +36,10 @@ const db = {
     try {
       const convertedSql = sql.includes('?') ? this._convertPlaceholders(sql) : sql;
       const result = await pool.query(convertedSql, params);
+      if (Array.isArray(result.rows)) {
+        result.rows.affectedRows = result.rowCount;
+        result.rows.rowCount = result.rowCount;
+      }
       return [result.rows];
     } catch (error) {
       console.error('Database query error:', error);
@@ -47,7 +56,11 @@ const db = {
           return sql.replace(/\?/g, () => `$${idx++}`);
         })() : sql;
         const result = await client.query(convertedSql, params);
-        return [result.rows];
+        if (Array.isArray(result.rows)) {
+          result.rows.affectedRows = result.rowCount;
+          result.rows.rowCount = result.rowCount;
+        }
+        return [result.rows, result];
       },
       async beginTransaction() {
         await client.query('BEGIN');

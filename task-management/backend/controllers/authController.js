@@ -117,6 +117,35 @@ const verifyEmail = async (req, res) => {
   }
 };
 
+const resendVerification = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await userModel.findUserByEmail(email);
+    if (!user) return res.status(404).json({ message: 'Email không tồn tại' });
+    if (user.is_verified) return res.status(400).json({ message: 'Email đã được xác minh' });
+
+    const verificationToken = uuidv4();
+    const verificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    await userModel.updateVerification(email, verificationToken, verificationExpires);
+
+    const verificationLink = `${process.env.FRONTEND_URL || "http://localhost:3000"}/verify-email?token=${verificationToken}`;
+    transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Gửi lại: Xác minh email của bạn',
+      html: `<p>Vui lòng nhấp vào liên kết sau để xác minh email của bạn: <a href="${verificationLink}">${verificationLink}</a></p><p>Liên kết sẽ hết hạn sau 24 giờ.</p>`,
+    }).then(() => {
+      return res.status(200).json({ message: 'Email xác minh đã được gửi lại.' });
+    }).catch(err => {
+      console.error('Failed to resend verification email:', err?.message || err);
+      return res.status(500).json({ message: 'Không thể gửi email xác minh. Vui lòng thử lại sau.' });
+    });
+  } catch (err) {
+    console.error('Error in resendVerification:', err);
+    res.status(500).json({ message: 'Lỗi server' });
+  }
+};
+
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
   try {
