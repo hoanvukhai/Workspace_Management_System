@@ -157,7 +157,9 @@ task-management/
 ## Contact
 
 **Developer:** Vũ Khải Hoàn
+
 **Email:** balaminmau@gmail.com
+
 **GitHub:** [github.com/hoanvukhai](https://github.com/hoanvukhai)
 
 ---
