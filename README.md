@@ -1,10 +1,10 @@
 # DuoTask - Hệ thống Quản lý Workspace
 
-Ứng dụng web full-stack quản lý công việc, ghi chú, lịch trình, tài chính và mục tiêu cho cá nhân và nhóm.
+Ứng dụng web full-stack quản lý công việc, ghi chú, lịch trình, chi tiêu và mục tiêu cho cá nhân và nhóm.
 
 ## Tổng quan
 
-DuoTask là nền tảng quản lý workspace tích hợp đa chức năng, cho phép người dùng tổ chức công việc, theo dõi tiến độ dự án, quản lý tài chính cơ bản và làm việc nhóm hiệu quả với hệ thống phân quyền rõ ràng.
+DuoTask là nền tảng quản lý workspace tích hợp đa chức năng, cho phép người dùng tổ chức công việc, theo dõi tiến độ dự án, quản lý chi tiêu cơ bản và làm việc nhóm hiệu quả với hệ thống phân quyền rõ ràng.
 
 **Demo:** [Live Demo](https://workspace-management-system-ebon.vercel.app/) | **API:** [Backend](https://duotask-api.onrender.com)
 
@@ -156,9 +156,9 @@ task-management/
 
 ## Contact
 
-**Developer:** Your Name  
-**Email:** your.email@example.com  
-**GitHub:** [github.com/yourusername](https://github.com/yourusername)
+**Developer:** Vũ Khải Hoàn
+**Email:** balaminmau@gmail.com
+**GitHub:** [github.com/hoanvukhai](https://github.com/hoanvukhai)
 
 ---
 *Dự án phát triển cho mục đích học tập và portfolio*
